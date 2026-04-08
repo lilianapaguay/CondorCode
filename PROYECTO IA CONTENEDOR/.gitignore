@@ -1,0 +1,15 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+.venv-1/
+venv/
+env/
+sistema_ia_residuos/venv/
+
+# Tooling artifacts
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/

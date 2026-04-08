@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 6
+names: ['Basura_fuera', 'Contenedor_Desbordado', 'Contenedor_Lleno', 'Contenedor_Vacio', 'Detector-de-basura', 'contenedor_lleno']
+
+roboflow:
+  workspace: bazarmg
+  project: detector-de-basura-lqruc
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/bazarmg/detector-de-basura-lqruc/dataset/2

@@ -1,8 +1,32 @@
-from ultralytics import YOLO
+import argparse
+from pathlib import Path
 
-MODEL_PATH = "data/models/contenedores_v1/weights/best.pt"
-VIDEO_PATH = "data/raw/videos/contenedores_riobamba.mp4"
+from app.config.settings import settings
+from app.infrastructure.vision.yolo_detector import YoloDetector
 
-model = YOLO(MODEL_PATH)
-results = model.predict(source=VIDEO_PATH, save=True, conf=0.35, project="data/predictions", name="video_test")
-print("Predicción sobre video terminada")
+
+def parse_args():
+	parser = argparse.ArgumentParser(description="Run YOLO prediction on a video file")
+	parser.add_argument("--source", default="data/raw/videos/contenedores_riobamba.mp4", help="Path to input video")
+	parser.add_argument("--model", default=str(settings.model_path), help="Path to model weights")
+	parser.add_argument("--conf", type=float, default=settings.default_confidence, help="Confidence threshold")
+	parser.add_argument("--name", default="video_test", help="Output experiment name")
+	return parser.parse_args()
+
+
+def main() -> None:
+	args = parse_args()
+
+	detector = YoloDetector(args.model)
+	detector.predict_video(
+		video_path=Path(args.source),
+		conf=args.conf,
+		save=True,
+		project=settings.predictions_dir,
+		name=args.name,
+	)
+	print("Prediccion sobre video terminada")
+
+
+if __name__ == "__main__":
+	main()
